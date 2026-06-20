@@ -1,0 +1,22 @@
+sport_data_ingestion:
+  target: prod
+  outputs:
+    dev:
+      type: clickhouse
+      schema: "{{ env_var('CLICKHOUSE_DB', 'sport_api') }}"
+      host: localhost
+      port: 18123
+      user: "{{ env_var('CLICKHOUSE_USER') }}"
+      password: "{{ env_var('CLICKHOUSE_PASSWORD') }}"
+      secure: false
+      threads: 4
+
+    prod:
+      type: clickhouse
+      schema: "{{ env_var('CLICKHOUSE_DB', 'sport_api') }}"
+      host: "{{ env_var('CLICKHOUSE_HOST', 'clickhouse') }}"
+      port: 8123
+      user: "{{ env_var('CLICKHOUSE_USER') }}"
+      password: "{{ env_var('CLICKHOUSE_PASSWORD') }}"
+      secure: false
+      threads: 4

@@ -1,0 +1,11 @@
+.env
+__pycache__/
+*.pyc
+*.pyo
+*.log
+logs/
+data/
+backups/
+.dagster/
+.airflow/
+.ipynb_checkpoints/

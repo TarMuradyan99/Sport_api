@@ -1,0 +1,85 @@
+version: 2
+
+models:
+  - name: daily_sports_inter
+    description: "Deduplicated daily sports events at the event and region grain"
+    columns:
+      - name: event_region_key
+        description: "Stable key for an event in a region"
+        tests:
+          - not_null
+          - unique
+      - name: event_id
+        description: "Event ID from the odds API"
+        tests:
+          - not_null
+      - name: region_id
+        description: "Numeric region ID used by the ingestion job"
+        tests:
+          - not_null
+      - name: sport_key
+        description: "Sport key from the odds API"
+        tests:
+          - not_null
+
+  - name: odds_api_sports_inter
+    description: "Deduplicated sports catalog from the odds API"
+    columns:
+      - name: sport_key
+        description: "Sport key from the odds API"
+        tests:
+          - not_null
+          - unique
+
+  - name: regions_inter
+    description: "Region lookup derived from daily sports events"
+    columns:
+      - name: region_id
+        description: "Numeric region ID used by the ingestion job"
+        tests:
+          - not_null
+          - unique
+      - name: region_code
+        description: "Odds API region code"
+
+  - name: sport_inter
+    description: "Sports dimension source combining the catalog and observed event sports"
+    columns:
+      - name: sport_key
+        description: "Sport key from the odds API"
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_regions
+    description: "Region dimension"
+    columns:
+      - name: region_id
+        description: "Numeric region ID"
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_sport
+    description: "Sport dimension"
+    columns:
+      - name: sport_key
+        description: "Sport key"
+        tests:
+          - not_null
+          - unique
+
+  - name: daily_sports_fact
+    description: "Fact table for daily sports events by region"
+    columns:
+      - name: event_region_key
+        description: "Stable key for an event in a region"
+        tests:
+          - not_null
+          - unique
+      - name: event_id
+        description: "Event ID from the odds API"
+      - name: region_id
+        description: "Numeric region ID"
+      - name: sport_key
+        description: "Sport key"

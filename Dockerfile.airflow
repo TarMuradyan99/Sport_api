@@ -1,0 +1,16 @@
+FROM apache/airflow:3.2.2
+
+USER root
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends git curl build-essential \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+USER airflow
+RUN pip install --no-cache-dir \
+    dbt-core \
+    dbt-clickhouse \
+    clickhouse-connect \
+    requests \
+    pandas \
+    python-dotenv

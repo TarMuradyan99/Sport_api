@@ -1,0 +1,51 @@
+version: 2
+
+models:
+  - name: daily_sports_stg
+    description: "Staging model for daily sports data"
+    columns:
+      - name: region_id
+        description: "Region ID for the sports data"
+        tests:
+          - not_null
+      - name: region
+        description: "Region name for the sports data"
+      - name: event_id
+        description: "Event ID for the sports data"
+        tests:
+          - not_null
+      - name: sport_key
+        description: "Sport key for the sports data"
+        tests:
+          - not_null
+      - name: sport_title
+        description: "Sport title for the sports data"
+      - name: commence_time
+        description: "Commence time for the sports event parsed as a timestamp"
+      - name: home_team
+        description: "Home team for the sports event"
+      - name: away_team
+        description: "Away team for the sports event"
+      - name: bookmaker_keys
+        description: "Bookmakers offering odds for the sports event"
+      - name: payload
+        description: "Payload containing odds and other data for the sports event"
+      - name: ingested_at
+        description: "Timestamp when the data was ingested into the database"
+  - name: odds_api_sports_stg
+    description: "Staging model for sports data from the odds API"
+    columns:
+      - name: sport_key
+        description: "Key for the sports data"
+        tests:
+          - not_null
+      - name: group_name
+        description: "Group name for the sports data"
+      - name: sport_title
+        description: "Title for the sports data"
+      - name: sport_description
+        description: "Description for the sports data"
+      - name: active
+        description: "Indicates if the sport is active in the odds API"
+      - name: has_outrights
+        description: "Indicates if the sport has outrights in the odds API"
