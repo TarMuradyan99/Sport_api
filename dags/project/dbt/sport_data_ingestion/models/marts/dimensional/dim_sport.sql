@@ -1,10 +1,8 @@
-{{ config(order_by='sport_key') }}
+{{config(materialized='table', engine='ReplacingMergeTree()', order_by='sport_key')}}
 
-select
-    sport_key,
-    group_name,
-    sport_title,
-    sport_description,
-    active,
-    has_outrights
-from {{ ref('sport_inter') }}
+
+with sports as (
+    select * from {{ ref('sport_inter') }}
+)
+
+select * from sports

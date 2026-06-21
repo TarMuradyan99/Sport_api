@@ -17,7 +17,6 @@ test-paths: ["tests"]
 seed-paths: ["seeds"]
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
-packages-install-path: "{{ env_var('DBT_PACKAGES_INSTALL_PATH', 'dbt_packages') }}"
 
 clean-targets:         # directories to be removed by `dbt clean`
   - "target"
@@ -32,12 +31,17 @@ clean-targets:         # directories to be removed by `dbt clean`
 # files using the `{{ config(...) }}` macro.
 models:
   sport_data_ingestion:
+    # Config indicated by + and applies to all files under models/example/
     staging:
-      +schema: intermediate
       +materialized: view
     intermediate:
-      +schema: intermediate
-      +materialized: view
-    marts:
-      +schema: marts
       +materialized: table
+    marts:
+      +materialized: table
+    marts.dimensions:
+      +materialized: table
+    marts.facts:
+      +materialized: table
+    marts.aggregates:
+      +materialized: table
+      

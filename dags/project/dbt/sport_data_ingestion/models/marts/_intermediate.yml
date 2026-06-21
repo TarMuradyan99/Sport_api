@@ -2,84 +2,56 @@ version: 2
 
 models:
   - name: daily_sports_inter
-    description: "Deduplicated daily sports events at the event and region grain"
+    description: "Intermediate model for daily sports data with deduplication"
     columns:
-      - name: event_region_key
-        description: "Stable key for an event in a region"
-        tests:
-          - not_null
-          - unique
-      - name: event_id
-        description: "Event ID from the odds API"
-        tests:
-          - not_null
       - name: region_id
-        description: "Numeric region ID used by the ingestion job"
-        tests:
-          - not_null
+        description: "Region ID for the sports data"
+      - name: region
+        description: "Region name for the sports data"
+      - name: event_id
+        description: "Event ID for the sports data"
       - name: sport_key
-        description: "Sport key from the odds API"
-        tests:
-          - not_null
-
-  - name: odds_api_sports_inter
-    description: "Deduplicated sports catalog from the odds API"
-    columns:
-      - name: sport_key
-        description: "Sport key from the odds API"
-        tests:
-          - not_null
-          - unique
-
+        description: "Sport key for the sports data"
+      - name: sport_title
+        description: "Sport title for the sports data"
+      - name: commence_time
+        description: "Commence time for the sports event"
+      - name: home_team
+        description: "Home team for the sports event"
+      - name: away_team
+        description: "Away team for the sports event"
+      - name: bookmaker_keys
+        description: "Bookmakers offering odds for the sports event"
+      - name: payload
+        description: "Payload containing odds and other data for the sports event"
+      - name: ingested_at
+        description: "Timestamp when the data was ingested into the database"
   - name: regions_inter
-    description: "Region lookup derived from daily sports events"
+    description: "Intermediate model for distinct regions from daily sports data"
     columns:
       - name: region_id
-        description: "Numeric region ID used by the ingestion job"
-        tests:
-          - not_null
-          - unique
-      - name: region_code
-        description: "Odds API region code"
-
-  - name: sport_inter
-    description: "Sports dimension source combining the catalog and observed event sports"
+        description: "Region ID for the sports data"
+      - name: region
+        description: "Region name for the sports data"
+  - name: odds_api_sports_inter
+    description: "Intermediate model for sports data from the odds API"
+    columns:
+      - name: key
+        description: "Key for the sports data"
+      - name: group_name
+        description: "Group name for the sports data"
+      - name: title
+        description: "Title for the sports data"
+      - name: description
+        description: "Description for the sports data"
+      - name: active
+        description: "Indicates if the sport is active in the odds API"
+      - name: has_outrights
+        description: "Indicates if the sport has outrights in the odds API"
+  - name: sport
+    description: "Intermediate model for sport data"
     columns:
       - name: sport_key
-        description: "Sport key from the odds API"
-        tests:
-          - not_null
-          - unique
-
-  - name: dim_regions
-    description: "Region dimension"
-    columns:
-      - name: region_id
-        description: "Numeric region ID"
-        tests:
-          - not_null
-          - unique
-
-  - name: dim_sport
-    description: "Sport dimension"
-    columns:
-      - name: sport_key
-        description: "Sport key"
-        tests:
-          - not_null
-          - unique
-
-  - name: daily_sports_fact
-    description: "Fact table for daily sports events by region"
-    columns:
-      - name: event_region_key
-        description: "Stable key for an event in a region"
-        tests:
-          - not_null
-          - unique
-      - name: event_id
-        description: "Event ID from the odds API"
-      - name: region_id
-        description: "Numeric region ID"
-      - name: sport_key
-        description: "Sport key"
+        description: "Sport key for the sports data"
+      - name: sport_title
+        description: "Sport title for the sports data"

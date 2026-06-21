@@ -1,36 +1,28 @@
-{% snapshot daily_sports_snapshots %}
+{% snapshot daily_sports_snapshot %}
 
 {{
     config(
         target_schema='snapshots',
-        unique_key='event_region_key',
+        unique_key='event_id',
         strategy='check',
         check_cols=[
-            'region',
-            'sport_key',
+            'sport_group',
             'sport_title',
-            'commence_time',
-            'home_team',
-            'away_team',
-            'bookmaker_keys',
-            'payload'
+            'sport_description',
+            'is_active',
+            'has_outrights'
         ]
     )
 }}
 
 select
-    event_region_key,
-    region_id,
-    region,
     event_id,
     sport_key,
+    sport_group,
     sport_title,
-    commence_time,
-    home_team,
-    away_team,
-    bookmaker_keys,
-    payload,
-    ingested_at
+    sport_description,
+    is_active,
+    has_outrights
 from {{ ref('daily_sports_inter') }}
 
 {% endsnapshot %}

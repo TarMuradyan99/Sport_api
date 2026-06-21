@@ -1,15 +1,14 @@
-select
-    region_id,
-    region as region_code,
-    multiIf(
-        region = 'eu', 'Europe',
-        region = 'us', 'United States',
-        region = 'au', 'Australia',
-        region
-    ) as region_name
-from {{ ref('daily_sports_stg') }}
+{{
+    config(materialized='table', engine='ReplacingMergeTree()', order_by='sport_id')
+}}
+
+
+with odds_api_sport_inter as (
+    select * from {{ ref('daily_sports_stg') }}
+)
+
+select 
+ distinct region_id,
+ region
+from odds_api_sport_inter
 where region_id is not null
-  and region != ''
-group by
-    region_id,
-    region

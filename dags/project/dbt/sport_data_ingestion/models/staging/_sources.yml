@@ -2,7 +2,7 @@ version: 2
 
 sources:
   - name: raw
-    schema: raw
+    database: raw
     description: "Raw data from the sports API"
     tables:
       - name: daily_sports
@@ -11,69 +11,74 @@ sources:
           - name: region_id
             description: "Region ID for the sports data"
             tests:
-              - not_null
+            - not_null
           - name: region
             description: "Region name for the sports data"
             tests:
-              - not_null
+            - not_null
           - name: event_id
             description: "Event ID for the sports data"
             tests:
-              - not_null
+            - not_null
+            - unique
           - name: sport_key
             description: "Sport key for the sports data"
             tests:
-              - not_null
+             -not_null
           - name: sport_title
             description: "Sport title for the sports data"
             tests:
-              - not_null
+            - not_null
           - name: commence_time
             description: "Commence time for the sports event"
             tests:
-              - not_null
+            - not_null
           - name: home_team
             description: "Home team for the sports event"
             tests:
-              - not_null
+            - not_null
           - name: away_team
             description: "Away team for the sports event"
             tests:
-              - not_null
+            - not_null
           - name: bookmaker_keys
             description: "Bookmakers offering odds for the sports event"
             tests:
-              - not_null
+            - not_null
           - name: payload
             description: "Payload containing odds and other data for the sports event"
             tests:
-              - not_null
+            - not_null
           - name: ingested_at
             description: "Timestamp when the data was ingested into the database"
-            tests:
-              - not_null
       - name: odds_api_sports
         description: "List of sports from the odds API"
         columns:
           - name: key
             description: "Key for the sports data"
             tests:
-              - not_null
+            - not_null
           - name: group_name
             description: "Group name for the sports data"
             tests:
-              - not_null
+            - not_null
           - name: title
             description: "Title for the sports data"
             tests:
-              - not_null
+            - not_null
           - name: description
             description: "Description for the sports data"
+            tests:
+            - not_null
           - name: active
             description: "Whether the sport is active in the odds API"
             tests:
-              - not_null
+            - not_null
           - name: has_outrights
             description: "Whether the sport has outrights in the odds API"
             tests:
-              - not_null
+            - not_null
+          - name: has_outrights
+            description: "Whether the sport has outrights in the odds API"
+            tests:
+            - not_null

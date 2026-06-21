@@ -1,7 +1,8 @@
-{{ config(order_by='region_id') }}
+{{config(materialized='table', engine='ReplacingMergeTree()', order_by='region_id')}}
 
-select
-    region_id,
-    region_code,
-    region_name
-from {{ ref('regions_inter') }}
+
+with regions_inter as (
+    select * from {{ ref('regions_inter') }}
+)
+
+select * from regions_inter
